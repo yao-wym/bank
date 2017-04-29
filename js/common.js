@@ -10,8 +10,8 @@ plus.webview.currentWebview().addEventListener('show', function() {
 });
 mui('body').on('tap', 'a', function(e) {
 	var targetTab = this.getAttribute('link');
-	console.log('link = '+targetTab);
 	if(targetTab!=null){
+		console.log('link = '+targetTab);
 		var page = plus.webview.getWebviewById(targetTab);
 		if(!page){
 			console.log('open new page '+targetTab);

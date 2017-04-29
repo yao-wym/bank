@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html>
-	<!--
-	作者：yuanyifanchn@163.com
-	时间：2015-01-28
-	描述：模板,风格指导...alt+ctrl+F的代码格式化,风格就是这么丑.......
--->
 
 	<head>
 		<meta charset="utf-8">
@@ -12,11 +7,45 @@
 		<title>订单</title>
 		<script src="js/mui.min.js"></script>
 		<script src="js/vue.js"></script>
+		<script src="js/vue-tap.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/common.css" rel="stylesheet" />
 		<style type="text/css">
+
 		</style>
 	</head>
+
+	<body id="app">
+		<header class="mui-bar mui-bar-nav" style="background-color: white;color: #CCCCCC;">
+			<div id="orderTab" class="mui-segmented-control mui-segmented-control-inverted">
+				<a v-tap="orderType=1" class="mui-control-item mui-active">待接单</a>
+				<a v-tap="orderType=2" class="mui-control-item">进行中</a>
+				<a v-tap="orderType=3" class="mui-control-item">维修完成</a>
+				<a v-tap="orderType=4" class="mui-control-item">维修失败</a>
+			</div>
+		</header>
 	</body>
 	<script src="js/common.js"></script>
+	<script type="text/javascript">
+		var sub = plus.webview.create("index_order_list.html", "index_order_list.html", {
+			top: '50px',
+			bottom: "0px"
+		});
+		plus.webview.currentWebview().append(sub)
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				title: '派单',
+				orderType:1
+			},
+			watch: {
+				orderType: function(newValue, oldValue) {
+					console.log('v-tap' + newValue);
+					mui.fire(sub,'change_type',{'type':newValue});
+				}
+			}
+		})
+	
+	</script>
+
 </html>
