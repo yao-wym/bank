@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>接单</title>
+		<script src="js/mui.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/vue-tap.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+	</head>
+
+	<body id="app">
+		<div id="sub-header" style="margin-top: 50px;">
+			<header v-if="title=='接单'" class="mui-bar mui-bar-nav" style="background-color: white;color: #CCCCCC;">
+				<div id="reciveTap" class="mui-segmented-control mui-segmented-control-inverted">
+					<a v-tap="reciveType=1" class="mui-control-item mui-active">自动派单({{autoOrder}})</a>
+					<a v-tap="reciveType=2" class="mui-control-item">定向群组派单({{groupOrder}})</a>
+				</div>
+			</header>
+			<header v-if="title=='巡检'" class="mui-bar mui-bar-nav" style="background-color: white;color: #CCCCCC;">
+				<div id="checkTab" class="mui-segmented-control mui-segmented-control-inverted">
+					<a v-tap="checkType=1" class="mui-control-item mui-active">未完成</a>
+					<a v-tap="checkType=2" class="mui-control-item">已完成</a>
+				</div>
+			</header>
+			<header v-if="title=='订单列表'" class="mui-bar mui-bar-nav" style="background-color: white;color: #CCCCCC;">
+				<div id="orderTab" class="mui-segmented-control mui-segmented-control-inverted">
+					<a v-tap="orderType=1" class="mui-control-item mui-active">进行中</a>
+					<a v-tap="orderType=3" class="mui-control-item">维修完成</a>
+					<a v-tap="orderType=4" class="mui-control-item">维修失败</a>
+				</div>
+			</header>
+		</div>
+	</body>
+	<script>
+		/*----------------  	Part 1   	变量声明  		----------------TODO */
+
+		/*----------------  	Part 2 		miu.init  		----------------TODO */
+		mui.init();
+		/*----------------  	Part 3 		mui.plusReady	----------------TODO */
+		mui.plusReady(function() {
+			sub = plus.webview.create("index_recive_list.html", "index_recive_list.html", {
+				top: '50px',
+				bottom: "0px"
+			});
+			plus.webview.currentWebview().append(sub)
+		});
+		/*----------------  	Part 4 		页面设置			----------------TODO */
+
+		/*----------------  	Part 5 		事件处理			----------------TODO */
+		window.addEventListener('dragright', function(e) {
+			e.detail.gesture.preventDefault();
+		});
+		/*----------------  	Part 6 		平台相关			----------------TODO */
+		//在android4.4.2中的swipe事件，需要preventDefault一下，否则触发不正常
+	</script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				title: '接单',
+				autoOrder:1,
+				groupOrder:2,
+				orderType: 1
+			},
+			watch: {
+				orderType: function(newValue, oldValue) {
+					console.log('v-tap' + newValue);
+					mui.fire(sub, 'change_type', {
+						'type': newValue
+					});
+				}
+			}
+		})
+	</script>
+
+</html>

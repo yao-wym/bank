@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{ title }}</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app" style="background-color: rgba(227, 227, 227, 1);">
+		<!--Begin 顶部导航 + 搜索Bar-->
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+		</header>
+		<div style="height: 45px;"></div>
+
+		<ul class="mui-table-view" style="font-size: 14px;color: #999999;">
+
+			<li class="mui-table-view-cell" style="position: initial;padding: 15px 15px 5px 15px;color: black;font-weight: 900;">
+				<div style="float: left;width: 30%;">流水号： </div>
+				<div style="float: left;">20170830</div>
+				<div style="float: right;width: 30%;">已出发</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;width: 30%;">下单日期： </div>
+				<div style="float: left;">2016.06.01 13：00</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;width: 50%;">机具编号：</div>
+				<div style="float: right;width: 50%;">机具序列号：</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 15px 15px;">
+				<div style="float: left;width: 50%;">机具型号：</div>
+				<div style="float: right;width: 50%;">故障类型：</div>
+			</li>
+		</ul>
+
+		<div style="height: 10px;"></div>
+		<ul class="mui-table-view" style="font-size: 13px;color: #999999;">
+
+			<li class="mui-table-view-cell" style="position: initial;padding: 15px 15px 5px 15px;color: black;font-weight: 900;">
+				<div style="float: left;">派单人员代码： </div>
+				<div style="float: left;">刘XX000001（若为PM则为空）</div>
+				<div class="mui-icon mui-icon-phone" style="float: right;"></div>
+			</li>
+			<li link="staff_detail.html" class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;">派单人： </div>
+				<div style="float: left;">（若为PM则为空）</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;">联系人电话： </div>
+				<div style="float: left;">（若为PM则为空）</div>
+			</li>
+			<li link="map_container.html?title=器材地址" class="mui-table-view-cell" style="position: initial;padding: 3px 15px 3px 15px;">
+				<div style="float: left;">器材地址： </div>
+				<div style="float: left;">XXXXXXX</div>
+				<div class="mui-icon mui-icon-location" style="float: right;"></div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;height:40px;padding: 5px 15px 5px 15px;color: #666666;font-size: 14px;border: solid;border-color: rgba(227, 227, 227, 1);;border-left: none;border-right: none;border-bottom: none;">
+				<div style="float: left;width: 25%;">接单日期： </div>
+				<div style="float: left;width: 25%">2016.06.01</div>
+				<div style="float: left;width: 25%;">接单时间：</div>
+				<div style="float: left;">15:30</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;height:40px;padding: 5px 15px 5px 15px;color: #666666;font-size: 14px;border: solid;border-color: rgba(227, 227, 227, 1);;border-left: none;border-right: none;border-bottom: none;">
+				<div style="float: left;width: 25%;">到达日期： </div>
+				<div style="float: left;width: 25%">2016.06.01</div>
+				<div style="float: left;width: 25%;">到达时间：</div>
+				<div style="float: left;">15:30</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;height:40px;padding: 5px 15px 5px 15px;color: #666666;font-size: 14px;border: solid;border-color: rgba(227, 227, 227, 1);;border-left: none;border-right: none;border-bottom: none;">
+				<div style="float: left;width: 25%;">完成日期： </div>
+				<div style="float: left;width: 25%">2016.06.01</div>
+				<div style="float: left;width: 25%;">完成时间：</div>
+				<div style="float: left;">15:30</div>
+			</li>
+		</ul>
+
+		<div style="height: 10px;"></div>
+		<ul class="mui-table-view" style="font-size: 14px;color: black;">
+
+			<li link="staff_detail.html" class="mui-table-view-cell" style="position: initial;padding: 5px 15px 5px 15px;color: #666666;font-size: 14px;border: solid;border-color: rgba(227, 227, 227, 1);border-left: none;border-right: none;border-top: none;">
+				<div style="float: left;padding: 5px;">维修人员1代码： </div>
+				<div style="float: left;padding: 5px;">张XX006666</div>
+
+			</li>
+			<li link="map_container.html?title=维修人员" class="mui-table-view-cell" style="position: initial;padding: 5px 15px 5px 15px;color: #666666;font-size: 14px;border: solid;border-color: rgba(227, 227, 227, 1);border-left: none;border-right: none;border-top: none;">
+				<div style="float: left;padding: 5px;">联系电话： </div>
+				<div style="float: left;padding: 5px;">13260488888</div>
+				<div class="mui-icon mui-icon-phone" style="float: right;"></div>
+				<div class="mui-icon mui-icon-location" style="float: right;"></div>
+			</li>
+		</ul>
+
+		<div style="height: 10px;"></div>
+		<ul class="mui-table-view" style="font-size: 14px;color: black;">
+
+			<li link="staff_detail.html" class="mui-table-view-cell" style="position: initial;padding: 5px 15px 5px 15px;color: #666666;font-size: 14px;border: solid;border-color: rgba(227, 227, 227, 1);border-left: none;border-right: none;border-top: none;">
+				<div style="float: left;padding: 5px;">维修人员2代码（如有）： </div>
+				<div style="float: left;padding: 5px;">张XX006666</div>
+
+			</li>
+			<li link="map_container.html?title=维修人员"  class="mui-table-view-cell" style="position: initial;padding: 5px 15px 5px 15px;color: #666666;font-size: 14px;border: solid;border-color: rgba(227, 227, 227, 1);border-left: none;border-right: none;border-top: none;">
+				<div style="float: left;padding: 5px;">联系电话（如有）： </div>
+				<div style="float: left;padding: 5px;">13260488888</div>
+				<div class="mui-icon mui-icon-phone" style="float: right;"></div>
+				<div class="mui-icon mui-icon-location" style="float: right;"></div>
+			</li>
+		</ul>
+		<div style="height: 10px;"></div>
+		<button v-tap="arrvieOrder" type="button" class="mui-btn" style="width: 100%;height: 45px;margin: 0px;border: none;background-color: #5A81FF;color: white;">
+			到达
+		</button>
+
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/vue-tap.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			methods:{
+				'arrvieOrder':function(){
+					redirect('order_detail_repair.html')
+				}
+			},
+			el: '#app',
+			data: {
+				'title': '订单详情-已出发'
+			}
+		})
+	</script>
+
+</html>

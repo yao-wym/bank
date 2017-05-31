@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{ title }}</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app" style="background-color: white;">
+		<!--Begin 顶部导航 + 搜索Bar-->
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+		</header>
+		<div style="height: 45px;"></div>
+		<ul class="mui-table-view" style="font-size: 14px;color: #999999;">
+
+			<li class="mui-table-view-cell" style="position: initial;padding: 15px 15px 5px 15px;color: black;font-weight: 900;">
+				<div style="float: left;width: 30%;">编号： </div>
+				<div style="float: left;">20170830</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;width: 30%;">姓名： </div>
+				<div style="float: left;">2016.06.01 13：00</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;width: 50%;">电话：</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px">
+				<div link="map_container.html?title=装机地址" style="float: left;width: 50%;">装机地址：<span></span></div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px">
+				<div style="float: left;width: 50%;">机具编号：</div>
+			</li>
+		</ul>
+		<ul class="mui-table-view" style="font-size: 13px;padding-top: 20px;">
+
+			<li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+				<div>机具状态：</div>
+				<div style="background-color: rgba(242, 242, 242, 1);padding: 10px 5px 10px 5px;">
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 14px;border-color: #000000;padding: 3px 15px;background-color: white;">正常</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 14px;border-color: #000000;padding: 3px 15px;background-color: white;">暂停</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 14px;border-color: #000000;padding: 3px 15px;background-color: white;">撤机</button>
+				</div>
+
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+				<div>故障类型：</div>
+				<div style="background-color: rgba(242, 242, 242, 1);padding: 5px 5px 0px 5px;">
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">&nbsp;读卡器&nbsp;</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">客户键盘</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">出钞模块</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">&nbsp;打印机&nbsp;</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">&nbsp;&nbsp;其它&nbsp;&nbsp;</button>
+				</div>
+				<div style="background-color: rgba(242, 242, 242, 1);padding: 5px 5px 5px 5px;">
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">&nbsp;&nbsp;&nbsp;通讯&nbsp;&nbsp;&nbsp;</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">&nbsp;&nbsp;显示器&nbsp;</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">后屏操作</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">&nbsp;&nbsp;监控&nbsp;&nbsp;</button>
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;border-color: #000000;padding: 2px 5px;background-color: white;">&nbsp;&nbsp;&nbsp;&nbsp;PM&nbsp;&nbsp;&nbsp;&nbsp;</button>
+				</div>
+			</li>
+			<li style="padding: 5px 5px 5px 15px;">
+				<span>预约日期：2016.06.01</span>
+				<span style="margin-left: 10px;">预约时间：16.01</span>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="padding: 10px 0px;">备注描述：</div>
+				<textarea style="background-color: rgba(242, 242, 242,1);padding-left: 1px;color: #666666;"></textarea>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<img style="width: 24%;" src="../img/user-default.jpg" />
+				<img style="width: 24%;" src="../img/user-default.jpg" />
+				<img style="width: 24%;" src="../img/user-default.jpg" />
+				<img style="width: 24%;" src="../img/user-default.jpg" />
+			</li>
+
+		</ul>
+		<div style="height: 50px;"></div>
+		<button v-tap="saveOrder" type="button" class="mui-btn" style="position: fixed;bottom: 0;width: 100%;height: 45px;margin: 0px;border: none;background-color: #5A81FF;color: white;">
+			保存
+		</button>
+		<!--Begin 底部bar-->
+		<!--<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" tab-page="index_recive.html">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">接单</span>
+			</a>
+			<a class="mui-tab-item" tab-page="index_order.html">
+				<span class="mui-icon mui-icon-list"></span>
+				<span class="mui-tab-label">我的订单</span>
+			</a>
+			<a class="mui-tab-item" tab-page="index_check.html">
+				<span class="mui-icon mui-icon-eye"></span>
+				<span class="mui-tab-label">巡检</span>
+			</a>
+			<a class="mui-tab-item" tab-page="index_message.html">
+				<span class="mui-icon mui-icon-email"></span>
+				<span class="mui-tab-label">消息</span>
+			</a>
+			<a class="mui-tab-item" tab-page="index_ucenter.html">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>-->
+		<!--End 底部bar-->
+
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/vue-tap.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		function pullOrderdetail(orderId) {
+			bank.get(ORDER_DETAIL_PROGRESS_API, {
+				orderId: orderId
+			}, function(res) {
+				order = res
+			})
+		}
+		var vm = new Vue({
+			methods: {
+				'saveOrder': function() {
+					plus.webview.currentWebview().opener().close();
+					mui.toast('保存成功');
+					mui.back();
+				}
+			},
+			el: '#app',
+			data: {
+				order: {},
+				orderId: "",
+				title: '接单'
+			}
+		})
+		window.addEventListener("init_with_params", function(e) {
+			vm.orderId = e.detail.params.orderId;
+			pullOrderdetail(vm.orderId);
+		})
+	</script>
+
+</html>

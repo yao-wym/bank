@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{title}}</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app">
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+			<a v-show="pageType=search" id="use-goods" class="mui-pull-right" style="font-size: 14px;color: white;margin-top: 11px;">出库</a>
+		</header>
+		<header class="mui-bar mui-bar-nav" style="margin-top: 44px;background-color: white;color: #CCCCCC;">
+			<div class="mui-input-row mui-search">
+				<input type="search" class="mui-input-clear" placeholder="">
+			</div>
+		</header>
+	</body>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		mui.plusReady(function() {
+			var sub = plus.webview.create("my_used_goods_sub.html", "my_used_goods_sub.html", {
+				top: '90px',
+				bottom: "0px"
+			});
+			plus.webview.currentWebview().append(sub)
+		})
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				title: '我的出库',
+				orderType: 1
+			},
+			watch: {
+				orderType: function(newValue, oldValue) {
+					console.log('v-tap' + newValue);
+					mui.fire(sub, 'change_type', {
+						'type': newValue
+					});
+				}
+			}
+		})
+	</script>
+
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{ title }}</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app" style="background-color: rgba(227, 227, 227, 1);">
+		<!--Begin 顶部导航 + 搜索Bar-->
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+		</header>
+		<div style="height: 45px;"></div>
+
+		<ul class="mui-table-view" style="font-size: 14px;color: #999999;">
+
+			<li class="mui-table-view-cell" style="position: initial;padding: 15px 15px 5px 15px;color: black;font-weight: 900;">
+				<div style="float: left;width: 30%;">线路名称： </div>
+				<div style="float: left;">{{lineName}}</div>
+				<div style="float: right;width: 50%;">已完成{{finish}}项&nbsp;剩余{{lefts}}项</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;width: 30%;">巡线日期： </div>
+				<div style="float: left;">{{startDate}}</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;">工程师1：</div>
+				<div style="float: left;">{{names[0]}}</div>
+				<div style="float: right;width: 45%;">{{phones[0]}}</div>
+				<div style="float: right;">电话：</div>
+				
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 15px 15px;">
+				<div style="float: left;">工程师2：</div>
+				<div style="float: left;">{{names[1]}}</div>
+				<div style="float: right;width: 45%;">{{phones[1]}}</div>
+				<div style="float: right;">电话：</div>
+			</li>
+		</ul>
+
+		<div style="height: 1px;"></div>
+		<ul class="mui-table-view" style="font-size: 14px;color: #999999;">
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 3px 15px;">
+				<div style="float: left;">机具单位：</div>
+				<div style="float: left;">民生银行</div>
+				<div style="float: right;width: 30%;">XX取款机</div>
+				<div style="float: right;">机具名称：</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 3px 15px;">
+				<div style="float: left;">机具类型：</div>
+				<div style="float: left;">ATM机</div>
+				<div style="float: right;width: 30%;">XXXXXX</div>
+				<div style="float: right;">机具编号：</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 5px 15px 5px 15px;color: black;">
+				<div style="float: left;">装机位置： </div>
+				<div style="float: left;">XXXXXXXXXXXXXXXX</div>
+				<div class="mui-icon mui-icon-location" style="float: right;"></div>
+			</li>
+			<li link="staff_detail.html" class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;width: 30%;">
+					<label>是否上柜</label>
+					<input name="checkbox1" value="Item 1" type="checkbox" checked>
+				</div>
+				<div style="float: left;width: 30%;">
+					<label>客打纸</label>
+					<input name="checkbox1" value="Item 1" type="checkbox" checked>
+				</div>
+				<div style="float: left;">
+					<label >吞取卡</label>
+				</div>
+				<div style="float:right;width: 25%;background-color: rgba(239, 239, 239, 1);">&nbsp;</div>
+				
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;">应急： </div>
+				<div style="float: right;width: 80%;background-color: rgba(239, 239, 239, 1);;">&nbsp;</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;">其他： </div>
+				<div style="float: right;width: 80%;background-color: rgba(239, 239, 239, 1);;">&nbsp;</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 20px 15px;">
+				<div style="float: left;">备注： </div>
+				<div style="float: right;width: 80%;background-color: rgba(239, 239, 239, 1);;">&nbsp;</div>
+			</li>
+		</ul>
+
+		<div style="height: 1px;"></div>
+		<ul class="mui-table-view" style="font-size: 14px;color: #999999;">
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 3px 15px;">
+				<div style="float: left;">机具单位：</div>
+				<div style="float: left;">民生银行</div>
+				<div style="float: right;width: 30%;">XX取款机</div>
+				<div style="float: right;">机具名称：</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 3px 15px;">
+				<div style="float: left;">机具类型：</div>
+				<div style="float: left;">ATM机</div>
+				<div style="float: right;width: 30%;">XXXXXX</div>
+				<div style="float: right;">机具编号：</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 5px 15px 5px 15px;color: black;">
+				<div style="float: left;">装机位置： </div>
+				<div style="float: left;">XXXXXXXXXXXXXXXX</div>
+				<div class="mui-icon mui-icon-location" style="float: right;"></div>
+			</li>
+			<li link="staff_detail.html" class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;width: 30%;">
+					<label>是否上柜</label>
+					<input name="checkbox1" value="Item 1" type="checkbox" checked>
+				</div>
+				<div style="float: left;width: 30%;">
+					<label>客打纸</label>
+					<input name="checkbox1" value="Item 1" type="checkbox" checked>
+				</div>
+				<div style="float: left;">
+					<label >吞取卡</label>
+				</div>
+				<div style="float:right;width: 25%;background-color: rgba(239, 239, 239, 1);">&nbsp;</div>
+				
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;">应急： </div>
+				<div style="float: right;width: 80%;background-color: rgba(239, 239, 239, 1);;">&nbsp;</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px;">
+				<div style="float: left;">其他： </div>
+				<div style="float: right;width: 80%;background-color: rgba(239, 239, 239, 1);;">&nbsp;</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 3px 15px 20px 15px;">
+				<div style="float: left;">备注： </div>
+				<div style="float: right;width: 80%;background-color: rgba(239, 239, 239, 1);;">&nbsp;</div>
+			</li>
+		</ul>
+		<div style="height: 10px;"></div>
+		<button v-tap="arrvieOrder" type="button" class="mui-btn" style="width: 100%;height: 45px;margin: 0px;border: none;background-color: #5A81FF;color: white;">
+			到达
+		</button>
+
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/vue-tap.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		TASK_LIST_API = "http://120.27.6.10:8349/bank/api/line/task_list"
+        mui.plusReady(function() {
+            mui.init();
+            bank.get(TASK_LIST_API, {
+                "account":'402848eb5bf02279015bf0369a730017',
+                "token": '402848eb5bf02279015bf0369a730017',
+                "planInsId":'XLXXJLB0001',
+                "sid": '1',
+                "page": '1',
+                "size":'10'
+            }, initTaskInfo)
+        })
+        function initTaskInfo(task) {
+            vm.planId = task.linePlanVo.planId;
+            vm.lineType = task.linePlanVo.lineType;
+            vm.lineName = task.linePlanVo.lineName;
+            vm.names = task.linePlanVo.names.split(',');
+            vm.phones = task.linePlanVo.phones.split(',');
+            vm.finish = task.linePlanVo.finish;
+            vm.lefts = task.linePlanVo.lefts;
+            vm.startDate = task.linePlanVo.startDate;
+            vm.id = task.linePlanVo.id;
+            
+        }
+
+		
+		var vm = new Vue({
+			methods:{
+				'arrvieOrder':function(){
+					redirect('order_detail_repair.html')
+				}
+			},
+			el: '#app',
+			data: {
+				'title':'线路详情',
+				planId: '',
+				lineType: '',
+				lineName: '',
+				names: '',
+				phones:'',
+				finish:'',
+				lefts: '',
+				startDate: '',
+				id: '~'
+				
+			}
+		})
+	</script>
+
+</html>

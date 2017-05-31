@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app">
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+		</header>
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view">
+					<li v-for="comment in comments" class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img style="border-radius: 50%;" class="mui-media-object mui-pull-left" v-bind:src="comment.icon">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 20%;">{{comment.name}}</span>
+									<span style="display: inline-block;width: 52%;">
+										<i v-for="index in comment.point" track-by="$index" class="mui-icon mui-icon-star"></i>
+									</span>
+									<span style="display: inline-block;width: 25%;">{{comment.date}}</span>
+								</p>
+								<p class='mui-ellipsis'>{{comment.note}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../js/common.js"></script>
+	<script src="../js/api.js"></script>
+	<script type="text/javascript">
+		var page = 1;
+		mui.plusReady(function() {
+			pullComments();
+		})
+
+		function pullComments() {
+			bank.get(COMMENTS_LIST_API, {
+				page: page,
+				size:20
+			}, function(res) {
+				for(var key in res.list) {
+					res.list[key]['point'] = new Array(parseInt(res.list[key]['point']));
+				}
+				vm.comments = res.list;
+			})
+		}
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				comments:[],
+				title: '评价',
+			},
+		})
+	</script>
+
+</html>

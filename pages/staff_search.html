@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{title}}</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app">
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+			<a v-show="pageType=='search'" v-tap="sendComponets" id="use-goods" class="mui-pull-right" style="font-size: 14px;color: white;margin-top: 11px;">出库</a>
+		</header>
+		<header class="mui-bar mui-bar-nav" style="margin-top: 44px;background-color: white;color: #CCCCCC;">
+			<div class="mui-input-row mui-search">
+				<input type="search" id="search-input" class="mui-input-clear" placeholder="">
+			</div>
+		</header>
+		<div style="margin-top: 50px;" id="refreshContainer" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul v-show="pageType='search'" class="mui-table-view mui-table-view-chevron">
+					<li v-tap="staff.selected=!staff.selected" v-for="staff in staffList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a href="javascript:;">
+							<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="staff.icon">
+							<div class="mui-media-body">
+								<p class='mui-ellipsis'>{{staff.name}}</p>
+								<p>
+									<span style="display: inline-block;width: 80%;">编号：{{staff.code}}</span>
+									<input v-bind:checked="staff.selected" style="display: inline-block;width: 20%;color: deepskyblue;" name="radio1" type="radio">
+								</p>
+								<p class='mui-ellipsis'>电话：{{staff.phone}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/vue-tap.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/api.js"></script>
+	<script type="text/javascript">
+		var page = 1;
+		var keyword = "";
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				title: '出库给',
+				orderType: 1,
+				pageType: 'search',
+				sum: 0,
+				staffList: [],
+				
+			},
+			methods: {
+					sendComponets: function() {
+						var components =JSON.parse(plus.webview.currentWebview().components)
+						bank.post(COMPONENT_POST_SURE_API, {
+							partsId: "123",
+							partsInOutId: "123",
+							storeInoutId: "123"
+						}, function(res) {
+							if(res == true){
+								mui.confirm("出库成功等待接收","",['确定','取消'],function(res){
+									if(res['index']==0){
+										mui.back();
+									}else{
+										
+									}
+								});
+							}
+						})
+					}
+				},
+			watch: {
+				orderType: function(newValue, oldValue) {
+					console.log('v-tap' + newValue);
+					mui.fire(sub, 'change_type', {
+						'type': newValue
+					});
+				}
+			}
+		})
+
+		function pullStaffList() {
+			bank.get(STAFF_STORT_LIST_API, {
+				page: page,
+				size: 50,
+				search: keyword
+			}, function(res) {
+				page++;
+				for(var i in res.list){
+					res.list[i]['selected'] = false;
+				}
+				vm.staffList = res.list
+			})
+		}
+		mui.plusReady(function() {
+			page = 1;
+			pullStaffList();
+			search_input = document.getElementById('search-input')
+			search_input.addEventListener('keyup', function(e) {
+				if(e.keyCode == 13) {
+					keyword = search_input.value;
+					page = 1;
+					pullStaffList();
+				}
+			});
+		})
+	</script>
+
+</html>

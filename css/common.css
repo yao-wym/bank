@@ -1,4 +1,75 @@
-header.mui-bar{
-	background-color: #0a3a81;
-	color: white;
+header.mui-bar {
+	background-color: #5A81FF;
+	color: #9197B1;
+}
+
+[v-cloak] {
+	display: none;
+}
+.mui-table-view-cell:after {
+	left: 0;
+}
+.mui-table-view-cell  {
+	color: #9197B1;
+	background-color: white;
+}
+li .mui-table-view-cell.mui-active {
+	background-color: white;
+}
+.mui-table-view-chevron .mui-table-view-cell {
+	padding-right: 50px;
+}
+
+.circle-icon {
+	border-radius: 50%;
+}
+
+.bg {
+	background-color: #5A81FF;
+}
+ul.bank-list li p{
+	font-family: PingFangSC-Regular, sans-serif;
+	color: #9197B1;
+	margin: 10px 0;
+}
+ul.bank-list li .state-label{
+	font-size: 14px;margin-top: -5px;
+	border-radius: 30px;color: #5A81FF;
+	float: right;
+	margin-left: 20px;
+	border:1px solid #5A81FF;padding: 2px 10px;
+}
+ul.bank-list  li p label{
+	font-family: PingFangSC-Regular, sans-serif;
+	color: #5B6387;
+}
+.index-center-menu li img {
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+}
+
+.index-center-menu li span {
+	position: relative;
+	top: -5px;
+}
+
+.list-col-2 span:nth-child(1) {
+	display: inline-block;
+	width: 50%;
+}
+
+.list-col-2 span:nth-child(2) {
+	display: inline-block;
+	width: 50%;
+}
+.state-btn-container button{
+	font-size:12px;
+	padding: 3px 5px;
+}
+.state-btn-container button.selected{
+	font-size:12px;
+	padding: 3px 5px;
+	color: #007aff;
+	background-color: white;
 }

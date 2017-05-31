@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>消息</title>
+		<script src="js/mui.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/vue-tap.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell {
+				padding-right: 10px;
+			}
+			
+			.mui-table-view-cell li {
+				background-color: white;
+			}
+			
+			.mui-bar-nav~.mui-content .mui-pull-top-pocket {
+				top: 180px !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul id="message-list" class="mui-table-view mui-table-view-chevron" style="background-color: inherit;">
+					<li v-for="message in messageList" class="mui-table-view-cell mui-media" style="background-color: white;margin-top: 10px;padding-right:20px;">
+						<a href="javascript:;">
+							<img style="border-radius: 50%;" class="mui-media-object mui-pull-left" src="img/xiaoxi2.png">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width:60%;">{{message.type}}</span>
+									<span style="display: inline-block;width:40%;">{{message.time}}</span>
+								</p>
+								<p class='mui-ellipsis'>{{message.content}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/common.js"></script>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#refreshContainer',
+				data: {
+					title: '消息',
+					messageList: [{
+						content: '您收到订单。。。',
+						type: '定向派单通知',
+						time: '2016-04-21'
+					}],
+				}
+			});
+			//			mui.init({
+			//				pullRefresh: {
+			//					container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+			//					down: {
+			//						height: 50, //可选,默认50.触发下拉刷新拖动距离,
+			//						auto: true, //可选,默认false.自动下拉刷新一次
+			//						contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+			//						contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+			//						contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+			//						callback: function() {
+			//							mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+			//						} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			//					}
+			//				}
+			//			})
+		</script>
+	</body>
+
+</html>

@@ -14,20 +14,158 @@
 	</head> 
 	<body id="app">
 		<!--Begin 顶部导航 + 搜索Bar-->
-		<header class="mui-bar mui-bar-nav" style="background-color: #0A3A81;">
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
 			<h1 class="mui-title" id="page-title" style="color: white;">
 			{{ title }}
 			</h1>
 		</header>
-		test
+		<div style="height: 45px;"></div>
+		
+		<ul class="mui-table-view" style="font-size: 12px;">
+		    <li class="mui-table-view-cell" style="position: initial;">
+		    		<img style="width: 100%;" src={{icon}} />
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">编号</div>
+		    		<div style="float: right;width: 80%;border: solid;border-width: 1px;padding: 0px 5px;background-color: rgba(204, 204, 204, 1);">
+		    			{{code}}
+		    		</div>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">身份证</div>
+		    		<div style="float: right;width: 80%;border: solid;border-width: 1px;padding: 0px 5px;background-color: rgba(204, 204, 204, 1);">
+		    			{{id_code}}
+		    		</div>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">姓名</div>
+		    		<div style="float: right;width: 80%;border: solid;border-width: 1px;padding: 0px 5px;background-color: rgba(204, 204, 204, 1);">
+		    			{{name}}
+		    		</div>
+		    	</li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">性别</div>
+		    		<div style="float: right;width: 80%;">{{sex}}</div>
+		    	</li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">维护商：</div>
+		    		<div style="float: right;width: 80%;">
+		    			<select style="position:absolute;border-color: rgb(153, 153, 153);padding: 0px;margin: 0px;width: initial;">
+				          <option selected="" value="1">维护商1</option>
+				          <option value="2">维护商2</option>
+				          <option value="3">维护商3</option>
+		        		</select>
+		    		</div>
+		    	</li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">区域：</div>
+		    		<div style="float: right;width: 80%;">
+		    			<select style="position:absolute;border-color: rgb(153, 153, 153);padding: 0px;margin: 0px;width: initial;">
+				          <option selected="" value="1">区域1</option>
+				          <option value="2">区域2</option>
+				          <option value="3">区域3</option>
+		        		</select>
+		    		</div>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">库房名称</div>
+		    		<div style="float: right;width: 80%;">{{store_name}}</div>
+		    		<!--<div style="float: right;width: 80%;">
+		    			<select style="position:absolute;border-color: rgb(153, 153, 153);padding: 0px;margin: 0px;width: initial;">
+				          <option selected="" value="1">{{store_name}}</option>
+				          <option value="2">库房名称2</option>
+				          <option value="3">库房名称3</option>
+		        		</select>
+		    		</div>-->
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">维修类型：</div>
+		    		<div style="float: right;width: 80%;">{{fix_type}}</div></li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    <div style="float: left;width: 20%;">电话</div>
+		    		<div style="float: right;width: 80%;border: solid;border-width: 1px;padding: 0px 5px;background-color: rgba(204, 204, 204, 1);">{{phone}}</div>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">人员状态：</div>
+		    		<div style="float: right;width: 80%;">
+		    			<select style="position:absolute;border-color: rgb(153, 153, 153);padding: 0px;margin: 0px;width: initial;">
+				          <option selected={{status==0}} value="0">在职</option>
+				          <option selected={{status==1}} value="1">离职</option>
+				          <option selected={{status==2}} value="2">转岗</option>
+				          <option selected={{status==3}} value="3">停职</option>
+		        		</select>
+		    		</div>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">等级：</div>
+		    		<div style="float: right;width: 80%;">{{level}}级</div>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<div style="float: left;width: 20%;">积分：</div>
+		    		<div style="float: right;width: 80%;">10000</div>
+		    </li>
+		</ul>
+		
+		
 	</body>
 	<script type="text/javascript">
+		MY_INFO_API = "http://120.27.6.10:8349/bank/api/e/user/info"
+        mui.plusReady(function() {
+            mui.init();
+            bank.get(MY_INFO_API, {
+                "account":'402848eb5bf02279015bf0369a730017',
+                "token": '402848eb5bf02279015bf0369a730017',
+                "sid": '1',
+                "field": '1'
+            }, initUserInfo)
+        })
+        function initUserInfo(component) {
+            vm.uid = component.uid;
+            vm.code = component.code;
+            vm.id_code = component.id_code;
+            vm.name = component.name;
+		
+			if (component.sex=='0'){
+            		vm.sex = "男";
+            }else if(component.sex=='1'){
+            		vm.sex = "女";
+            }
+			vm.phone = component.phone;
+			vm.level = component.level;
+            vm.status = component.status;
+            if (component.fix_type=='0'){
+            		vm.fix_type = "ATM";
+            }else if(component.fix_type=='1'){
+            		vm.fix_type = "多媒体";
+            }else if(component.fix_type=='2'){
+            		vm.fix_type = "存款机";
+            }
+			vm.store_name = component.store_name;
+			vm.area = component.area;
+            vm.workStatus = component.workStatus;
+			vm.icon = component.icon;
+        }
+
 		var vm = new Vue({
 			el: '#app',
 			data: {
-				'title':'我的信息'
+				'title':'我的信息',
+				uid: '',
+				code: '',
+				id_code: '',
+				name: '',
+				sex:'',
+				phone:'',
+				level: '',
+				status: '',
+				fix_type: '~',
+				store_name: '',
+				area:'',
+				workStatus:'',
+				icon:''
 			}
 		})
+		
 	</script>
 </html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单列表</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell p {
+				color: #333333;
+			}
+			
+			.check-btn {
+				padding: 0px;
+				width: 20px;
+				height: 20px;
+				display: inline-block;
+				border: none;
+			}
+			
+			.unchoosed {
+				background-color: #CCCCCC;
+			}
+			
+			.choosed {
+				background-color: #0062CC;
+			}
+		</style>
+	</head>
+
+	<body id="app">
+		<div v-show="currentType=='out_components'" v-tap="use_goods" class="bg" style="z-index: 2017;width: 100%;padding-top: 15px;color: white;position: fixed;bottom: 0;height: 50px;text-align: center;">
+			出库
+		</div>
+		<img v-if="loading" style="display: block;margin: 200px auto;" src="../img/loading.gif"></img>
+		<!--下拉刷新容器-->
+		<div v-if="!loading" id="refreshContainer" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul v-if="currentType=='my_components'" id='my_components' class="mui-table-view mui-table-view-chevron">
+					<li v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a href="javascript:;">
+							<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.avatar">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 70%;">{{goods.partsName}}-{{goods.type}}{{goods.partsStatus}}</span>
+									<span style="display: inline-block;width: 35%;">数量:{{goods.count}}</span>
+								</p>
+								<p class='mui-ellipsis'>配件编号:{{goods.code}}</p>
+								<p class='mui-ellipsis'>{{goods.sn}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<ul v-if="currentType=='out_components'" class="mui-table-view mui-table-view-chevron">
+					<li  v-tap="goods.selected=!goods.selected;" v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a href="javascript:;">
+							<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.avatar">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 70%;">{{goods.partsName}}-{{goods.type}}{{goods.partsStatus}}</span>
+									<span style="display: inline-block;width: 35%;">数量:{{goods.count}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span style="display: inline-block;width: 80%;">配件编号:{{goods.code}}</span>
+									<input style="display: inline-block;width: 20%" name="radio1" v-bind:checked="goods.selected" type="radio">
+								</p>
+								<p class='mui-ellipsis'>
+									{{goods.sn}}
+									<span v-if="goods.count>1">
+										<button v-tap="goods.sum>0?goods.sum--:''" type="button" class="check-btn mui-btn" v-bind:class="{'unchoosed':goods.sum==0,'choosed':goods.sum>0}">-</button>
+										<span>{{goods.sum}}</span>
+										<button v-tap="goods.sum<goods.count?goods.sum++:''" type="button" class="check-btn mui-btn" v-bind:class="{'unchoosed':goods.sum==0,'choosed':goods.sum>0}">+</button>
+									</span>
+									
+								</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<!--数据列表-->
+				<ul v-if="currentType=='my_out_components'" class="mui-table-view mui-table-view-chevron">
+					<li v-tap="goods.selected=!goods.selected" v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a href="javascript:;">
+							<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.avatar">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 70%;">{{goods.name}}-{{goods.type}}{{goods.status}}</span>
+									<span style="display: inline-block;width: 35%;">数量:{{goods.count}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span style="display: inline-block;width: 80%;">配件编号:{{goods.code}}</span>
+									<input v-if="goods.count==1" style="display: inline-block;width: 20%" name="radio1" checked="{{goods.selected}}" type="checkbox">
+								</p>
+								<p class='mui-ellipsis'>
+									{{goods.sn}}
+								
+								</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+
+				<ul v-if="currentType=='my_in_components'" class="mui-table-view mui-table-view-chevron">
+					<li v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a>
+							<img link="machine_tips.html" style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.avatar">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 70%;">{{goods.partsName}}-{{goods.type}}{{goods.partsStatus}}</span>
+									<span style="display: inline-block;width: 35%;">数量:{{goods.count}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span>配件编号:{{goods.code}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span>序列号:{{goods.sn}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<div style="display: inline-block;width: 70%;">
+										<p class='mui-ellipsis' style="line-height: 18px;">
+											<span style="display: inline-block;width:50%">出库方:{{goods.outName}}</span>
+											<span>电话:{{goods.outPhone}}</span>
+										</p>
+										<p class='mui-ellipsis' style="line-height: 18px;">
+											<span style="display: inline-block;width:50%">入库方:{{goods.inName}}</span>
+											<span>电话:{{goods.phone}}</span>
+										</p>
+									</div>
+									<div style="display: inline-block;width: 30%;position: relative;top:-10px;">
+										<button v-tap="reciveComponents(goods)" type="button" class="mui-btn-primary" style="padding:1px 5px;font-size: 12px;">接受</button>
+									</div>
+								</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+
+				<ul v-if="currentType=='all_components'" class="mui-table-view mui-table-view-chevron">
+					<li link="machine_tips.html" v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a link="machine_tips.html">
+							<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.avatar">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 70%;">{{goods.partsName}}-{{goods.type}}{{goods.status}}</span>
+									<span style="display: inline-block;width: 35%;">数量:{{goods.count}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span>配件编号:{{goods.code}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span>序列号:{{goods.sn}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<div style="display: inline-block;width: 70%;">
+										<p class='mui-ellipsis' style="line-height: 18px;">
+											<span style="display: inline-block;width:50%">出库方:{{goods.outName}}</span>
+											<span>电话:{{goods.outPhone}}</span>
+										</p>
+										<p class='mui-ellipsis' style="line-height: 18px;">
+											<span style="display: inline-block;width:50%">入库方:{{goods.inName}}</span>
+											<span>电话:{{goods.phone}}</span>
+										</p>
+									</div>
+									<div style="display: inline-block;width: 30%;position: relative;top:-10px;">
+										<button type="button" class="mui-btn-primary" style="padding:1px 5px;font-size: 12px;">取消</button>
+									</div>
+								</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+	<script src="../js/mui.js"></script>
+	<script src="../js/vue.js"></script>
+	<script src="../js/vue-tap.js"></script>
+	<script src="../js/api.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		keyword = '';
+		page = 1;
+
+		function initDataFunc(data) {
+			var component = {}
+			component = data;
+			component['sum'] = 0;
+			component['selected'] = false;
+			return component;
+		}
+
+		function pullComponetList() {
+			vm.loading = true;
+			bank.get(vm.typeMap[vm.currentType]['api'], {
+				search: keyword,
+				page: page,
+				size: 10
+			}, function(res) {
+				vm.loading = false;
+				page++;
+				for(key in res.list) {
+					component = initDataFunc(res.list[key])
+					vm.goodsList.push(component);
+				}
+			});
+		}
+		window.addEventListener('pullComponetList', function(e) {
+			keyword = e.detail.keyword;
+			page = 1;
+			vm.goodsList = [];
+			pullComponetList()
+		});
+		var vm = new Vue({
+			el: '#app',
+			methods: {
+				reciveComponents:function(components){
+					bank.post(COMPONENT_RECIVE_SURE_API,
+						{
+							partsId:components.id,
+							partsInOutId:components.partsInOutId,
+							storeInoutId:component.storeInOutId
+						},
+						function(res){
+						
+					})
+					event.stopPropagation()
+				},
+				use_goods: function() {
+					var choosedGoods = {};
+					for(var key in this.goodsList) {
+						goods = this.goodsList[key];
+						console.log(JSON.stringify(goods));
+						if(goods['selected']) {
+							if(goods['sum'] > 0){
+								choosedGoods = goods;
+								break;
+							}else if(!goods['sum']>0&&goods['sn']!=''){
+								goods['sum'] = 1;
+								choosedGoods = goods;
+								break;
+							}
+							
+						}
+					}
+					if(choosedGoods == {}) {
+						alert('请选择配件');
+					} else {
+						bank.post(COMPONENT_POST_API, {
+							"SN":choosedGoods['sn']
+						}, function(res) {
+							if(res == true){
+								redirect('staff_search.html?components='+JSON.stringify(choosedGoods));
+							}
+						})
+						
+					}
+				}
+			},
+			data: {
+				sum: 0,
+				loading: true,
+				goodsList: [],
+				currentType: "my_components",
+				typeMap: {
+					"my_components": {
+						"api": GOODS_MINE_API,
+					},
+					"my_out_components": {
+						"api": GOODS_OUT_API,
+					},
+					"my_in_components": {
+						"api": GOODS_IN_API,
+					},
+					"out_components": {
+						"api": GOODS_MINE_API,
+					},
+					"all_components": {
+						"api": GOODS_SEARCH_API,
+					},
+				}
+			},
+		})
+		mui.plusReady(function() {
+			vm.currentType = plus.webview.currentWebview().parent().type
+			page = 1;
+//			setTimeout("",1000);
+			pullComponetList()
+			vm.goodsList = [];
+		})
+		mui.init({
+			pullRefresh: {
+				container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down: {
+					height: 50, //可选,默认50.触发下拉刷新拖动距离,
+					auto: true, //可选,默认false.自动下拉刷新一次
+					contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+					callback: function() {
+						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				}
+			}
+		})
+		window.addEventListener("change_type", function(e) {
+			console.log(JSON.stringify(e.detail.type));
+			page = 1;
+			vm.currentType = e.detail.type;
+			if(vm.currentType != 'out_components') {
+				if(e.detail['is_refresh'] === undefined || e.detail['us_refresh'] == true) {
+					pullComponetList();
+					vm.goodsList = [];
+				}
+			}
+
+		});
+	</script>
+
+</html>

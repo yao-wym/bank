@@ -189,5 +189,235 @@
 				}
 			}
 		}
+	},
+	"dependencies": {
+		"pages": {
+			"index_ucenter.html": {
+				"resources": [
+					"img/user-info.png",
+					"img/kufang.png",
+					"img/shangban.png",
+					"img/kufangchaxun.png",
+					"img/dairuku.png",
+					"img/bolang.png",
+					"img/edit.png",
+					"img/daichuku.png",
+					"js/mui.min.js",
+					"js/api.js",
+					"css/common.css",
+					"js/common.js",
+					"js/vue.js",
+					"css/mui.min.css",
+					"js/vue-tap.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"pages/login.html"
+				],
+				"priority": 0
+			},
+			"index.html": {
+				"resources": [
+					"js/common.js",
+					"js/vue.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"create_work_order.html",
+					"img/loading.gif",
+					"js/vue-tap.js"
+				],
+				"refer": [
+					"index_ucenter.html",
+					"pages/order_detail.html",
+					"pages/components_search.html",
+					"pages/route_detail.html",
+					"index_check_list.html",
+					"pages/my_info.html",
+					"index_message_sub.html",
+					"index_order_list.html"
+				],
+				"priority": 0
+			},
+			"index_message_sub.html": {
+				"resources": [
+					"img/xiaoxi2.png",
+					"js/mui.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"index_order_list.html": {
+				"resources": [
+					"css/common.css",
+					"js/mui.js",
+					"js/api.js",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"pages/order_progress_detail.html"
+				],
+				"priority": 0
+			},
+			"create_work_order.html": {
+				"resources": [
+					"js/vue.js",
+					"css/common.css",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/vue-tap.js",
+					"img/1@2x.png",
+					"js/common.js",
+					"js/api.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pages/components_search.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"pages/components_search_sub.html",
+					"js/mui.min.js",
+					"js/common.js",
+					"js/vue.js",
+					"css/common.css",
+					"css/mui.min.css",
+					"js/api.js",
+					"js/vue-tap.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pages/route_detail.html": {
+				"resources": [
+					"js/common.js",
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/common.css",
+					"css/mui.min.css",
+					"js/vue-tap.js",
+					"js/api.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pages/components_search_sub.html": {
+				"resources": [
+					"js/common.js",
+					"js/vue.js",
+					"css/common.css",
+					"css/mui.min.css",
+					"img/loading.gif",
+					"js/mui.js",
+					"js/api.js",
+					"js/vue-tap.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pages/my_info.html": {
+				"resources": [
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pages/login.html": {
+				"resources": [
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pages/order_progress_detail.html": {
+				"resources": [
+					"js/common.js",
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/common.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/vue-tap.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"index_check_list.html": {
+				"resources": [
+					"js/common.js",
+					"js/vue.js",
+					"css/common.css",
+					"css/mui.min.css",
+					"js/mui.js",
+					"js/api.js",
+					"js/vue-tap.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"pages/order_detail.html": {
+				"resources": [
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"pages/my_all_goods_sub.html",
+				"pages/order_detail_wait.html",
+				"pages/order_detail_repair.html",
+				"pages/component_note.html",
+				"pages/staff_search_sub.html",
+				"pages/reset_password.html",
+				"pages/machine_tips.html",
+				"pages/barcode.html",
+				"index_list.html",
+				"pages/my_all_goods.html",
+				"pages/goods_edit.html",
+				"index_send.html",
+				"pages/map_container.html",
+				"img/blue_location.png",
+				"pages/order_recive_detail.html",
+				"index_message.html",
+				"pages/order_detail_mine.html",
+				"index_order.html",
+				"img/5@2x.png",
+				"pages/my_comments_sub.html",
+				"img/user-gray.png",
+				"pages/work_order.html",
+				"pages/order_detail_group.html",
+				"pages/barcode_scan2.html",
+				"css/mui.css",
+				"pages/order_detail_out.html",
+				"js/immersed.js",
+				"pages/goods_edit_sub.html",
+				"pages/barcode_scan.html",
+				"img/xiaoxi.png",
+				"index_check.html",
+				"pages/my_comments.html",
+				"pages/my_recived_goods_sub.html",
+				"img/beijian.png",
+				"img/4@2x.png",
+				"img/2@2x.png",
+				"pages/staff_detail.html",
+				"pages/staff_search.html",
+				"pages/all_goods_sub.html",
+				"pages/route_detail_finish.html",
+				"pages/my_used_goods.html",
+				"img/3@2x.png",
+				"img/user-default.jpg",
+				"pages/map_container_sub.html",
+				"pages/my_recived_goods.html",
+				"pages/all_goods.html",
+				"js/base.js",
+				"img/6@2x.png",
+				"pages/my_used_goods_sub.html",
+				"img/default.png",
+				"pages/component_edit.html"
+			]
+		}
 	}
 }

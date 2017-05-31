@@ -8,140 +8,254 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/mui.min.css">
-		<script src="js/vue.js"></script>
-		<script src="js/mui.min.js"></script>
-		<style type="text/css">
 
+		<style type="text/css">
+			#sub-header header {
+				position: inherit;
+				margin-top: 50px;
+				border-bottom: 1px solid #CCCCCC;
+			}
+			
+			.mui-bar-nav~.mui-content .mui-pull-top-pocket {
+				top: 100px !important;
+			}
 		</style>
 	</head>
 
 	<body id="app">
 		<!--Begin 顶部导航 + 搜索Bar-->
-		<header class="mui-bar mui-bar-nav" style="background-color: #0A3A81;">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
-			<h1 class="mui-title" id="page-title" style="color: white;">
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<h1 v-cloak class="mui-title" id="page-title" style="color: white;">
 			{{ title }}
 			</h1>
 		</header>
+
+		<!--<img style="display: block;margin: 200px auto;" src="img/loading.gif"></img>-->
+
 		<!--Begin 底部bar-->
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item mui-active" tab-page="index_send.html">
+			<a class="mui-tab-item mui-active" tab-page="create_work_order.html">
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">派单</span>
 			</a>
-			<a class="mui-tab-item" tab-page="index_order.html">
+			<a class="mui-tab-item" tab-page="index_order_list.html">
 				<span class="mui-icon mui-icon-list"></span>
 				<span class="mui-tab-label">订单</span>
 			</a>
-			<a class="mui-tab-item" tab-page="index_message.html">
+			<a class="mui-tab-item" tab-page="index_message_sub.html" style="position: relative;">
 				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">消息</span>
+				<div style="z-index: 100;font-size: 12px;color: white;border-radius: 50%;width: 14px;height: 14px;background-color: red;position: absolute;right: 25px;top:3px">
+					<span style="position: relative;top:-3px">1</span>
+				</div>
 			</a>
 			<a class="mui-tab-item" tab-page="index_ucenter.html">
 				<span class="mui-icon mui-icon-contact"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
 		</nav>
-		<!--End 底部bar-->
-		<script>
-			/*----------------  	Part 1   	变量声明  		----------------TODO */
-			var subpages = ['index_send.html', 'index_order.html', 'index_message.html', 'index_ucenter.html'];
-			var subpage_style = {
-				top: '46px',
-				bottom: '50px'
-			};
-			var subpage_style_with_header = {
-				//				top: '46px',
-				bottom: '50px'
-			};
-			/*----------------  	Part 2 		miu.init  		----------------TODO */
-			mui.init({
-				preloadLimit: 5,
-				swipeBack: false,
-				statusBarBackground: '#f7f7f7',
-				preloadPages: [{
+
+	</body>
+	<script src="js/vue.js"></script>
+	<script src="js/vue-tap.js"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/common.js"></script>
+	<!--End 底部bar-->
+	<script>
+		/*----------------  	Part 1   	变量声明  		----------------TODO */
+
+		var subpage_style = {
+			top: '44px',
+			bottom: '50px'
+		};
+		var activeTab = "create_work_order.html";
+		var subpage_style_with_header = {
+			top: '44px',
+			bottom: '50px'
+		};
+		/*----------------  	Part 2 		miu.init  		----------------TODO */
+		mui.init({
+			preloadLimit: 15,
+			swipeBack: false,
+			statusBarBackground: '#f7f7f7',
+			preloadPages: [{
+					styles: {
+						top: '0px'
+					},
+					url: 'pages/order_detail.html',
+					id: 'pages/order_detail.html',
+				},
+				{
 					styles: {
 						top: '0px'
 					},
 					url: 'pages/my_info.html',
 					id: 'pages/my_info.html',
-				}]
-			});
+				},
+				{
+					styles: {
+						top: '0px'
+					},
+					url: 'pages/components_search.html',
+					id: 'pages/components_search.html',
+				},
+				{
+					styles: {
+						top: '0px'
+					},
+					url: 'pages/route_detail.html',
+					id: 'pages/route_detail.html',
+				},
 
-			/*----------------  	Part 3 		mui.plusReady	----------------TODO */
-			mui.plusReady(function() {
-				init_tab_bar();
-				init_pages();
-				//android屏幕方向锁定
-				if(mui.os.android) {
-					plus.screen.lockOrientation("portrait-primary");
-				}
-				window.addEventListener("init_header", function(e) {
-					console.log(JSON.stringify(e.detail.title));
-					vm.title = e.detail.title;
-				});
-			});
-			/*----------------  	Part 4 		页面设置			----------------TODO */
-			/*
-			 * 创建子页面，首个选项卡页面显示，其它均隐藏；
-			 * from:官方示例 
-			 */
-			function init_pages() {
-				var self = plus.webview.currentWebview();
-				for(var i = 0; i < 4; i++) {
-					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
-					self.append(sub);
-					sub.hide();
-				}
-				plus.webview.getWebviewById(subpages[0]).show();
-			};
+			]
+		});
 
-			function init_tab_bar() {
-				var activeTab = subpages[0];
-				var title = document.getElementById("title");
-				mui('.mui-bar-tab').on('tap', 'a', function(e) {
-					var targetTab = this.getAttribute('tab-page');
-					if(targetTab == activeTab) {
-						return;
-					}
-					plus.webview.show(targetTab);
-					//隐藏当前;
-					plus.webview.hide(activeTab);
-					//更改当前活跃的选项卡
-					activeTab = targetTab;
-				});
+		/*----------------  	Part 3 		mui.plusReady	----------------TODO */
+		mui.plusReady(function() {
+			init_tab_bar();
+			init_pages();
+			//android屏幕方向锁定
+			if(mui.os.android) {
+				plus.screen.lockOrientation("portrait-primary");
 			}
-			/*
-			 * 首页返回键处理
-			 * 处理逻辑：1秒内，连续两次按返回键，则退出应用；
-			 * from:官方
-			 */
-			var first = null;
-			mui.back = function() {
-				//首次按键，提示‘再按一次退出应用’
-				if(!first) {
-					first = new Date().getTime();
-					mui.toast('再按一次退出应用');
-					setTimeout(function() {
-						first = null;
-					}, 1000);
-				} else {
-					if(new Date().getTime() - first < 1000) {
-						plus.runtime.quit();
-					}
+			window.addEventListener("init_header", function(e) {
+				console.log(JSON.stringify(e.detail.title));
+				vm.title = e.detail.title;
+			});
+			checkLogin();
+		});
+
+		function checkLogin() {
+			token = localStorage.getItem('token');
+			console.log('token=' + token);
+			if(!token) {
+				redirect('pages/login.html');
+			}
+		}
+		/*----------------  	Part 4 		页面设置			----------------TODO */
+		/*
+		 * 创建子页面，首个选项卡页面显示，其它均隐藏；
+		 * from:官方示例 
+		 */
+		function init_pages() {
+			mui.preload({
+				url: 'index_ucenter.html',
+				id: 'index_ucenter.html',
+				styles: subpage_style
+			}, false);
+			mui.preload({
+				url: 'index_message_sub.html',
+				id: 'index_message_sub.html',
+				styles: subpage_style
+			}, false);
+			mui.preload({
+				url: 'index_check_list.html',
+				id: 'index_check_list.html',
+				styles: subpage_style_with_header
+			}, false);
+			mui.preload({
+				url: 'index_order_list.html',
+				id: 'index_order_list.html',
+				styles: subpage_style_with_header
+			}, false);
+
+			var self = plus.webview.currentWebview();
+			var sub = plus.webview.create("create_work_order.html", "create_work_order.html", subpage_style_with_header);
+			self.append(sub);
+		};
+
+		function init_tab_bar() {
+			var title = document.getElementById("title");
+			mui('.mui-bar-tab').on('tap', 'a', function(e) {
+				var targetTab = this.getAttribute('tab-page');
+				if(targetTab == activeTab) {
+					return;
 				}
-			};
-			
-		</script>
-	</body>
-	<script type="text/javascript" src="js/common.js"></script>
+				plus.webview.show(targetTab);
+				//隐藏当前;
+				plus.webview.hide(activeTab);
+				console.log("targetTab=" + targetTab);
+				console.log("activeTab=" + activeTab);
+				//更改当前活跃的选项卡
+				activeTab = targetTab;
+			});
+		}
+		/*
+		 * 首页返回键处理
+		 * 处理逻辑：1秒内，连续两次按返回键，则退出应用；
+		 * from:官方
+		 */
+		var first = null;
+		mui.back = function() {
+			//首次按键，提示‘再按一次退出应用’
+			if(!first) {
+				first = new Date().getTime();
+				mui.toast('再按一次退出应用');
+				setTimeout(function() {
+					first = null;
+				}, 1000);
+			} else {
+				if(new Date().getTime() - first < 1000) {
+					plus.runtime.quit();
+				}
+			}
+		};
+	</script>
 	<script>
 		var vm = new Vue({
-				el: '#app',
-				data: {
-					title: '派单'
+			el: '#app',
+			data: {
+				checkType: 1,
+				title: '派单',
+				autoOrder: 1,
+				groupOrder: 2,
+				orderType: 1,
+				reciveType: 1
+			},
+			watch: {
+				orderType: function(newValue, oldValue) {
+					var orderPage = plus.webview.getWebviewById("index_order_list.html")
+					console.log('v-tap' + newValue);
+					mui.fire(orderPage, 'change_type', {
+						'type': newValue
+					});
+				},
+				checkType: function(newValue, oldValue) {
+					var checkPage = plus.webview.getWebviewById("index_check_list.html")
+					console.log('v-tap' + newValue);
+					mui.fire(checkPage, 'change_type', {
+						'type': newValue
+					});
 				}
+			}
+		})
+
+		function clearPages() {
+			var all = plus.webview.all();
+			console.log("webviews" + all.length);
+			for(var i = 0; i < all.length; i++) {
+				console.log(all[i].id);
+				//						if(homePages[all[i].id] != 1&&plus.webview.currentWebview().id!=all[i].id){
+				//							all[i].close();
+				//						}
+			}
+		}
+		mui.plusReady(function() {
+			clearPages();
+			watchLocation();
+		})
+
+		function watchLocation() {
+			plus.geolocation.watchPosition(function(p) {
+				plus.webview.currentWebview().location = {
+					lat: p.coords.latitude,
+					lon: p.coords.longitude,
+				}
+//				console.log("Geolocation\nLatitude:" + p.coords.latitude + "\nLongitude:" + p.coords.longitude + "\nAltitude:" + p.coords.altitude);
+			}, function(e) {
+
 			})
+		}
 	</script>
 
 </html>

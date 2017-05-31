@@ -10063,7 +10063,7 @@ var template = Object.freeze({
       if (devtools) {
         devtools.emit('init', Vue);
       } else if ('development' !== 'production' && inBrowser && /Chrome\/\d+/.test(window.navigator.userAgent)) {
-        console.log('Download the Vue Devtools for a better development experience:\n' + 'https://github.com/vuejs/vue-devtools');
+//      console.log('Download the Vue Devtools for a better development experience:\n' + 'https://github.com/vuejs/vue-devtools');
       }
     }
   }, 0);

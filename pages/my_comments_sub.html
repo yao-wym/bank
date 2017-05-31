@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单列表</title>
+		<script src="../js/mui.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<!--下拉刷新容器-->
+	<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<!--数据列表-->
+			<ul class="mui-table-view">
+				<li v-for="comment in comments" class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img style="border-radius: 50%;" class="mui-media-object mui-pull-left" v-bind:src="comment.icon">
+						<div class="mui-media-body">
+							<p>
+								<span style="display: inline-block;width: 20%;">{{comment.name}}</span>
+								<span style="display: inline-block;width: 52%;">
+										<i v-for="index in comment.point" track-by="$index" class="mui-icon mui-icon-star"></i>
+									</span>
+								<span style="display: inline-block;width: 25%;">{{comment.date}}</span>
+							</p>
+							<p class='mui-ellipsis'>{{comment.note}}</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script src="../js/api.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		mui.plusReady(function() {
+
+		})
+
+		function pullComments() {
+			bank.get(COMMENTS_LIST_API, {
+				uid: self.parent.uid
+			}, function(res) {
+				for(var key in res.list) {
+					res.list[key]['point'] = new Array(parseInt(res.list[key]['point']));
+				}
+				vm.comments = res.list;
+				mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+			})
+		}
+		var vm = new Vue({
+			el: '#refreshContainer',
+			data: {
+				title: '评价',
+				comments: []
+			},
+
+		})
+
+		mui.init({
+			pullRefresh: {
+				container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down: {
+					height: 50, //可选,默认50.触发下拉刷新拖动距离,
+					auto: true, //可选,默认false.自动下拉刷新一次
+					contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+					callback: function() {
+						pullComments();
+					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				}
+			}
+		})
+	</script>
+
+</html>

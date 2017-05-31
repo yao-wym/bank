@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单列表</title>
+		<script src="../js/mui.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell p {
+				color: #333333;
+			}
+			
+			.check-btn {
+				padding: 0px;
+				width: 20px;
+				height: 20px;
+				display: inline-block;
+				border: none;
+			}
+			
+			.unchoosed {
+				background-color: #CCCCCC;
+			}
+			
+			.choosed {
+				background-color: #0062CC;
+			}
+		</style>
+	</head>
+
+	<body id="app">
+		<div v-tap="use_goods" class="bg" style="z-index: 2017;width: 100%;padding-top: 15px;color: white;position: fixed;bottom: 0;height: 50px;text-align: center;">
+			出库
+		</div>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul v-show="pageType='search'" class="mui-table-view mui-table-view-chevron">
+					<li v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a href="javascript:;">
+							<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.avatar">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 70%;">{{goods.name}}-{{goods.type}}{{goods.status}}</span>
+									<span style="display: inline-block;width: 35%;">数量:{{goods.count}}</span>
+								</p>
+								<p class='mui-ellipsis'>配件编号:{{goods.goodsID}}</p>
+								<p class='mui-ellipsis'>{{goods.sn}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<!--数据列表-->
+				<ul v-show="pageType='choose'" class="mui-table-view mui-table-view-chevron">
+					<li v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+						<a href="javascript:;">
+							<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.avatar">
+							<div class="mui-media-body">
+								<p>
+									<span style="display: inline-block;width: 70%;">{{goods.name}}-{{goods.type}}{{goods.status}}</span>
+									<span style="display: inline-block;width: 35%;">数量:{{goods.count}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span style="display: inline-block;width: 80%;">配件编号:{{goods.goodsID}}</span>
+									<input style="display: inline-block;width: 20%" name="radio1" checked="{{goods.selected}}" type="checkbox">
+								</p>
+								<p class='mui-ellipsis'>
+									{{goods.sn}}
+									<button v-tap="goods.sum>0?goods.sum--:''" type="button" class="check-btn mui-btn" v-bind:class="{'unchoosed':goods.sum==0,'choosed':goods.sum>0}">-</button>
+									<span>{{goods.sum}}</span>
+									<button v-tap="goods.sum<goods.count?goods.sum++:''" type="button" class="check-btn mui-btn" v-bind:class="{'unchoosed':goods.sum==0,'choosed':goods.sum>0}">+</button>
+								</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+	<script src="../js/api.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		keyword = '';
+		mui.plusReady(function(){
+			pullGoodsList();
+		})
+		function pullGoodsList(){
+			vm.goodsList = [];
+			goodsList = [];
+			bank.get(GOODS_MINE_API,{search:keyword},function(res){
+				for(key in res.list){
+					goods = {};
+					goods['name'] = res.list[key]['partName'];
+					goods['count'] = res.list[key]['count'];
+					goods['goodsID'] = res.list[key]['ownCode'];
+					goods['type'] = res.list[key]['partsType'];
+					goods['sn'] = res.list[key]['sn'];
+					goods['avatar'] = res.list[key]['icon'];
+					goods['status'] = res.list[key]['status'];
+					goods['sum'] = 0;
+					goods['selected'] = false;
+					goodsList.push(goods);
+				}
+				vm.goodsList = goodsList;
+			});
+		}
+		window.addEventListener('pullGoodsList',function(e){keyword = e.detail.keyword;pullGoodsList()});
+		var vm = new Vue({
+			el: '#app',
+			methods: {
+				use_goods: function() {
+					var choosedGoods = [];
+					for(var key in this.goodsList) {
+						goods = this.goodsList[key];
+						console.log(JSON.stringify(goods));
+						if(goods['sum'] > 0 && goods['selected'] == true) {
+							choosedGoods.push(goods);
+						}
+					}
+					if(choosedGoods.length == 0) {
+						alert('请选择配件');
+					} else {
+						redirect('staff_search.html')
+					}
+				}
+			},
+			data: {
+				pageType: 'search',
+				sum: 0,
+				goodsList: [],
+				orderType: 1
+			},
+		})
+
+		mui.init({
+			pullRefresh: {
+				container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down: {
+					height: 50, //可选,默认50.触发下拉刷新拖动距离,
+					auto: true, //可选,默认false.自动下拉刷新一次
+					contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+					callback: function() {
+						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				}
+			}
+		})
+		window.addEventListener("change_type", function(e) {
+			console.log(JSON.stringify(e.detail.type));
+			vm.orderType = e.detail.type;
+		});
+	</script>
+
+</html>

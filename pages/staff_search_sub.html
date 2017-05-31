@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/mui.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell p {
+				color: #333333;
+			}
+			.check-btn{
+				padding: 0px;width: 20px;height: 20px;display: inline-block;border: none;
+			}
+			.unchoosed{
+				background-color: #CCCCCC;
+			}
+			.choosed{
+				background-color: #0062CC;
+			}
+		</style>
+	</head>
+	<!--下拉刷新容器-->
+	<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<!--数据列表-->
+			<ul v-show="pageType='search'" class="mui-table-view mui-table-view-chevron">
+				<li v-for="staff in staffList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+					<a href="javascript:;">
+						<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" src="{{staff.avatar}}">
+						<div class="mui-media-body">
+							<p class='mui-ellipsis'>{{staff.name}}</p>
+							<p>
+								<span style="display: inline-block;width: 80%;">编号：{{staff.staffID}}</span>
+								<input style="display: inline-block;width: 20%;color: deepskyblue;" name="radio1" type="radio">
+							</p>
+							<p class='mui-ellipsis'>电话：{{staff.phone}}</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#refreshContainer',
+			data: {
+				pageType: 'search',
+				sum: 0,
+				staffList: [{
+					sum:0,
+					name: '库房1',
+					staffID: 'sadw2123',
+					phone: '13041022978',
+					avatar: '../img/user-default.jpg'
+				}],
+				orderType: 1
+			},
+		})
+
+		mui.init({
+			pullRefresh: {
+				container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down: {
+					height: 50, //可选,默认50.触发下拉刷新拖动距离,
+					auto: true, //可选,默认false.自动下拉刷新一次
+					contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+					callback: function() {
+						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				}
+			}
+		})
+		window.addEventListener("change_type", function(e) {
+			console.log(JSON.stringify(e.detail.type));
+			vm.orderType = e.detail.type;
+		});
+	</script>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{ title }}</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app">
+		<!--Begin 顶部导航 + 搜索Bar-->
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+		</header>
+		<div style="height: 45px;"></div>
+
+		<ul class="mui-table-view" style="font-size: 14px;color: #666666;">
+			<li class="mui-table-view-cell" style="position: initial;">
+				<img style="width: 100%;" src="../img/123.png" />
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+				<div style="float: left;width: 20%;">姓名</div>
+				<div style="float: right;width: 80%;">张XX-43991999888</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 7px 15px;">
+				<div style="float: left;width: 20%;">编号</div>
+				<div style="float: right;width: 80%;">XXXXXX</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 7px 15px;">
+				<div style="float: left;width: 20%;">积分：</div>
+				<div style="float: right;width: 80%;">XXXX</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 7px 15px;">
+				<div style="float: left;width: 20%;">等级：</div>
+				<div style="float: right;width: 80%;">一级</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 10px 15px;">
+				<div style="float: left;width: 20%;">区域：</div>
+				<div style="float: right;width: 80%;">北京</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 10px 15px;">
+				<div style="float: left;">所属维护商：</div>
+				<div style="float: left;">民生银行维护团队</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 10px 15px;">
+				<div style="float: left;">电话：</div>
+				<div style="float: left;">XXXXX</div>
+			</li>
+			<li class="mui-table-view-cell" style="position: initial;padding: 10px 15px;">
+				<div style="float: left;">维护案例</div>
+				<div style="float: right;">更多 ></div>
+			</li>
+			<li link="my_comments.html" class="mui-table-view-cell" style="position: initial;padding: 10px 15px;">
+				<div style="float: left;">评价（已完成12单）</div>
+				<div style="float: right;">></div>
+			</li>
+
+		</ul>
+
+	</body>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				'title': '维护人员详情'
+			}
+		})
+	</script>
+
+</html>

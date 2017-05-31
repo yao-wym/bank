@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{ title }}</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/vue.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+		</style>
+	</head> 
+	<body id="app" style="background-color: white;">
+		<!--Begin 顶部导航 + 搜索Bar-->
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }}
+			</h1>
+		</header>
+		<div style="height: 45px;"></div>
+		
+		<ul class="mui-table-view" style="font-size: 14px;">
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<img style="width: 100%;" src={{icon}} />
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    		<label>{{partsName}}</label>
+		    		<label>SN</label>
+		    		<label style="float: right;">{{count}}</label>
+		    		<label style="float: right;">数量：</label>
+		    		
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    	<label>配件状态：</label>
+		    	<select style="position:absolute;border-color: rgb(153, 153, 153);padding: 0px;margin: 0px;width: inherit;">
+		          <option  selected={{partsStatus==0}} value="0">正常</option>
+		          <option selected={{partsStatus==1}} value="1">待检测</option>
+		          <option selected={{partsStatus==2}} value="2">报废</option>
+        		</select>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    	<label>配件编号：</label>
+		    	<label>{{sn}}</label>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    	<label>序列号：</label>
+		    	<label>{{code}}</label>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    	<label>自定义编号：</label>
+		    	<label>{{ownCode}}</label>
+		    </li>
+		    <li class="mui-table-view-cell" style="position: initial;padding: 5px 15px;">
+		    	<label>备注：</label>
+		    	<textarea style="height: 150px;"></textarea>
+		    </li>
+		     
+		</ul>
+		<button type="button" class="mui-btn" style="width: 100%;height: 45px;margin: 0px;border: none;background-color: #5A81FF;color: white;" >
+			确认
+		</button>
+		
+	</body>
+	<script src="../js/api.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		//ID:402848eb5c1529d7015c1560172b0011
+        COMPONENT_NOTE_API = "http://120.27.6.10:8349/bank/api/e/parts/parts_info"
+        mui.plusReady(function() {
+            mui.init();
+            bank.get(COMPONENT_NOTE_API, {
+                'pid':'402848eb5c1529d7015c1560172b0011',
+                "account": '402848eb5bf02279015bf0369a730017',
+                "sid": '1',
+                "token": '1'
+            }, initComponentInfo)
+        })
+        function initComponentInfo(component) {
+            vm.partsName = component.partsName;
+            vm.ownCode = component.ownCode;
+            vm.count = component.count;
+            vm.code = component.code;
+			vm.icon = component.icon;
+			vm.partsStatus = component.partsStatus;
+			vm.sn = component.sn;
+        }
+
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				'title':'备件备注',
+				partsName: '',
+				ownCode: '',
+				count: '',
+				code: '',
+				icon:'',
+				partsStatus:'',
+				sn:''
+			}
+		})
+	</script>
+</html>

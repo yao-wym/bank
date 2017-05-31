@@ -1,1 +1,154 @@
-null
+{
+	"index_ucenter.html": {
+		"resources": [
+			"img/user-info.png",
+			"img/kufang.png",
+			"img/shangban.png",
+			"img/kufangchaxun.png",
+			"img/dairuku.png",
+			"img/bolang.png",
+			"img/edit.png",
+			"img/daichuku.png",
+			"js/mui.min.js",
+			"js/api.js",
+			"css/common.css",
+			"js/common.js",
+			"js/vue.js",
+			"css/mui.min.css",
+			"js/vue-tap.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"pages/login.html"
+		]
+	},
+	"index.html": {
+		"resources": [
+			"js/common.js",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"create_work_order.html",
+			"img/loading.gif",
+			"js/vue-tap.js"
+		],
+		"refer": [
+			"index_ucenter.html",
+			"pages/order_detail.html",
+			"pages/components_search.html",
+			"pages/route_detail.html",
+			"index_check_list.html",
+			"create_work_order.html",
+			"pages/my_info.html",
+			"index_message_sub.html",
+			"index_order_list.html"
+		]
+	},
+	"index_message_sub.html": {
+		"resources": [
+			"img/xiaoxi2.png",
+			"js/mui.js"
+		]
+	},
+	"index_order_list.html": {
+		"resources": [
+			"css/common.css",
+			"js/mui.js",
+			"js/api.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"pages/order_progress_detail.html"
+		]
+	},
+	"create_work_order.html": {
+		"resources": [
+			"js/vue.js",
+			"css/common.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/vue-tap.js",
+			"img/1@2x.png",
+			"js/common.js",
+			"js/api.js"
+		]
+	},
+	"pages/components_search.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"pages/components_search_sub.html",
+			"js/mui.min.js",
+			"js/common.js",
+			"js/vue.js",
+			"css/common.css",
+			"css/mui.min.css",
+			"js/api.js",
+			"js/vue-tap.js"
+		],
+		"refer": [
+			"pages/components_search_sub.html"
+		]
+	},
+	"pages/route_detail.html": {
+		"resources": [
+			"js/common.js",
+			"js/vue.js",
+			"js/mui.min.js",
+			"css/common.css",
+			"css/mui.min.css",
+			"js/vue-tap.js",
+			"js/api.js",
+			"fonts/mui.ttf"
+		]
+	},
+	"pages/components_search_sub.html": {
+		"resources": [
+			"js/common.js",
+			"js/vue.js",
+			"css/common.css",
+			"css/mui.min.css",
+			"img/loading.gif",
+			"js/mui.js",
+			"js/api.js",
+			"js/vue-tap.js"
+		]
+	},
+	"pages/my_info.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		]
+	},
+	"pages/login.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		]
+	},
+	"pages/order_progress_detail.html": {
+		"resources": [
+			"js/common.js",
+			"js/vue.js",
+			"js/mui.min.js",
+			"css/common.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/vue-tap.js"
+		]
+	},
+	"index_check_list.html": {
+		"resources": [
+			"js/common.js",
+			"js/vue.js",
+			"css/common.css",
+			"css/mui.min.css",
+			"js/mui.js",
+			"js/api.js",
+			"js/vue-tap.js"
+		]
+	},
+	"pages/order_detail.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		]
+	}
+}

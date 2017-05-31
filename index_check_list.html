@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>巡检</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+	</head>
+	<style type="text/css">
+		.mui-table-view-cell:after {
+			left: 0;
+		}
+		
+		.mui-table-view-chevron .mui-table-view-cell {
+			padding-right: 50px;
+		}
+	</style>
+
+	<body id="app">
+
+		<header id="order-header" class="mui-bar mui-bar-nav" style="background-color: white;color: #CCCCCC;">
+			<div id="checkTab" class="mui-segmented-control mui-segmented-control-inverted">
+				<a v-tap="checkType=0" class="mui-control-item mui-active">已完成</a>
+				<a v-tap="checkType=1" class="mui-control-item">未完成</a>
+			</div>
+		</header>
+		<!--下拉刷新容器-->
+		<div style="margin-top: 50px;">
+
+			<!--数据列表-->
+			<ul class="bank-list" style="padding: 0;">
+				<li style="margin-top: 3px;background-color: white;" v-for="plan in planList[checkType]" track-by="$index" class="mui-table-view-cell">
+					<a link="pages/route_detail.html" style="overflow: hidden;">
+						<p style="font-weight: bold;color: #333333">线路名称：{{plan.lineName}}<span style="float: right;">已完成{{plan.finish}}项 剩余{{plan.lefts}}</p>
+							<p style="font-size: 12px;">寻线日期：{{plan.pyear}}-{{plan.pmonth}}-{{plan.pdate}}</p>
+							<p style="font-size: 12px;font-weight: 500;" v-for="engineer in plan.engineers" class="list-col-2">
+								<span>工程师：{{engineer.name}}</span>
+							<span>电话：{{engineer.phone}}</span>
+						</p>
+					</a>
+				</li>
+			</ul>
+
+		</div>
+	</body>
+	<script src="js/mui.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/vue-tap.js"></script>
+	<script src="js/api.js"></script>
+	<script src="js/common.js"></script>
+	<script type="text/javascript">
+		keyword = 1;
+		page = 1;
+		size = 10;
+		var statusMap = {
+			"0":"已出发",
+			"1":"维修中",
+			"2":"维修完成",
+			"3":"维修失败",
+		}
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				planList: {},
+				checkType: 0,
+				page: {
+					"0": 1,
+					"1": 1
+				},
+			},
+			watch: {
+				checkType: function(newVal, oldVal) {
+					pullGoodsList();
+				}
+			}
+
+		})
+
+		function pullGoodsList() {
+			planList = [];
+			bank.get(CHECK_LIST_API, {
+				field: vm.checkType,
+				page: vm.page[vm.checkType],
+				size: size
+			}, function(res) {
+				for(key in res.list) {
+					plan = {};
+					plan['planId'] = res.list[key]['planId'];
+					plan['lineType'] = res.list[key]['lineType'];
+					plan['lineName'] = res.list[key]['lineName'];
+					plan['usrId'] = res.list[key]['usrId'];
+					plan['finish'] = res.list[key]['finish'];
+					plan['lefts'] = res.list[key]['lefts'];
+					plan['status'] = res.list[key]['status'];
+					plan['pdate'] = res.list[key]['pdate'];
+					plan['pmonth'] = res.list[key]['pmonth'];
+					plan['pyear'] = res.list[key]['pyear'];
+					plan['engineers'] = []
+					if(res.list[key]['names']) {
+						var phones = [];
+						var names = res.list[key]['names'].split(',');
+						if(res.list[key]['phones']) {
+							var phones = res.list[key]['phones'].split(',');
+						}
+						for(var index in names) {
+							var engineer = {};
+							engineer['name'] = names[index];
+							engineer['phone'] = phones[index];
+							plan['engineers'].push(engineer);
+						}
+					}
+					planList.push(plan);
+				}
+				checkType = vm.checkType
+				obj = {};
+				for(var key in vm.planList){
+					obj[key] = vm.planList[key];
+				}
+				obj[checkType] = planList;
+				vm.planList = obj;
+			
+				console.log(JSON.stringify(vm.planList));
+				if(planList.length == size) {
+					vm.page[vm.checkType]++;
+				}
+
+			});
+		}
+		mui.plusReady(function() {
+			pullGoodsList();
+		})
+
+		//		mui.init({
+		//			pullRefresh: {
+		//				container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+		//				down: {
+		////					height: 50, //可选,默认50.触发下拉刷新拖动距离,
+		////					auto: true, //可选,默认false.自动下拉刷新一次
+		//					contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+		//					contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+		//					contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+		//					callback: function() {
+		//						page = 1;
+		//						pullGoodsList();
+		//					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+		//				},
+		//				up:{
+		//					callback: function() {
+		//						pullGoodsList();
+		//					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+		//				}
+		//			}
+		//		})
+		//		window.addEventListener("change_type", function(e) {
+		//			console.log(JSON.stringify(e.detail.type));
+		//			vm.checkTab = e.detail.type;
+		//		});
+	</script>
+
+</html>

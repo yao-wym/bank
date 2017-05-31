@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{title}}</title>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.goods-edit-li input {
+				height: 20px;
+			}
+			.list-head div{
+				display: inline-block;
+				width: 16%;
+				text-align: center;
+				font-size: 12px;
+			}
+			.goods-edit-li input{
+				display: inline-block;
+				width: 16%;
+				padding: 0;
+				padding-left: 1px;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+
+	<body id="app">
+		<header class="mui-bar mui-bar-nav" style="background-color: #5A81FF;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<h1 class="mui-title" id="page-title" style="color: white;">
+			{{ title }} 
+			</h1>
+		</header>
+		<!--数据列表-->
+		<ul style="margin-top: 80px;padding-left: 10px;">
+			<li class="list-head" style="list-style: none;">
+				<div>备件名称</div>
+				<div>序列号</div>
+				<div>数量</div>
+				<div>单件</div>
+				<div>合计</div>				
+				<!--<div v-tap="delGoods($index)" class="mui-icon mui-icon-trash"></div>-->
+			</li>
+			<li v-for="goods in goodsList" class="goods-edit-li" style="list-style: none;">
+				<input type="text"/>
+				<input type="text"/>
+				<input type="text"/>
+				<input type="text"/>
+				<input type="text"/>
+				<div v-tap="delGoods($index)" class="mui-icon mui-icon-trash"></div>
+			</li>
+			<button v-tap="addGoods" class="bg" style="color: white;border-radius: 5px;padding-top: 1px;text-align: center;margin: 0 auto;width: 95%;height: 20px;line-height: 20px;font-size: 12px;">添加</button>
+		</ul>
+	</body>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			methods: {
+				addGoods: function() {
+					var goods = {
+						goodsName: '',
+						goodsID: '',
+						goodsNum: '',
+						goodsPrice: '',
+					};
+					this.goodsList.push(goods);
+				},
+				delGoods: function(index) {
+					var goods = {
+						goodsName: '',
+						goodsID: '',
+						goodsNum: '',
+						goodsPrice: '',
+					};
+					this.goodsList.splice(index,1);
+				}
+			},
+			data: {
+				title: '备件使用情况编辑',
+				goodsList: [{
+					goodsName: '',
+					goodsID: '',
+					goodsNum: '',
+					goodsPrice: '',
+				}]
+			},
+			watch: {
+				orderType: function(newValue, oldValue) {
+					console.log('v-tap' + newValue);
+					mui.fire(sub, 'change_type', {
+						'type': newValue
+					});
+				}
+			}
+		})
+	</script>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单列表</title>
+		<script src="../js/mui.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell p {
+				color: #333333;
+			}
+			
+			.check-btn {
+				padding: 0px;
+				width: 20px;
+				height: 20px;
+				display: inline-block;
+				border: none;
+			}
+			
+			.unchoosed {
+				background-color: #CCCCCC;
+			}
+			
+			.choosed {
+				background-color: #0062CC;
+			}
+		</style>
+	</head>
+
+	<div class="bg" style="z-index: 2017;width: 100%;padding-top: 15px;color: white;position: fixed;bottom: 0;height: 50px;text-align: center;">
+		出库
+	</div>
+	<!--下拉刷新容器-->
+	<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<!--数据列表-->
+			<ul v-show="pageType='search'" class="mui-table-view mui-table-view-chevron">
+				<li v-for="goods in goodsList" class="mui-table-view-cell mui-media" style="padding-right: 30px;">
+					<a href="javascript:;">
+						<img style="width: 60px;max-width: 60px;height: 60px;" class="mui-media-object mui-pull-left" v-bind:src="goods.icon">
+						<div class="mui-media-body">
+							<p class='mui-ellipsis'>
+								<div style="display: inline-block;width: 80%;">
+									{{goods.name}}-{{goods.type}}-{{goods.status}}
+								</div>
+								<div style="display: inline-block;width: 20%;font-size: 12px;">
+									数量:{{goods.count}}
+								</div>
+							</p>
+							<p>
+								<div  style="display: inline-block;width: 80%;">
+									<p>编号：{{goods.goodsID}}</p>
+									<p>序列号：{{goods.sn}}</p> 
+									<p class='mui-ellipsis'>所有者:{{goods.owner}} 电话:{{goods.phone}}</p>
+								</div>
+								<div style="display: inline-block;width: 20%;">
+									<img style="width: 30px;height: 33px;" src="../img/blue_location.png"/>
+									<p>{{goods.distance}}</p>
+								</div>
+							</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script src="../js/api.js"></script>
+	<script src="../js/common.js"></script>
+	<script type="text/javascript">
+		keyword = '';
+		goodsList = [];
+		mui.plusReady(function() {
+			pullGoodsList();
+		})
+
+		function pullGoodsList() {
+			vm.goodsList = [];
+			bank.get(GOODS_SEARCH_API, {
+				search: keyword
+			}, function(res) {
+				for(key in res.list) {
+					goods = {};
+					goods['name'] = res.list[key]['partsName'];
+					goods['count'] = res.list[key]['count'];
+					goods['goodsID'] = res.list[key]['ownCode'];
+					goods['type'] = res.list[key]['partsType'];
+					goods['sn'] = res.list[key]['sn'];
+					goods['icon'] = res.list[key]['icon'];
+					goods['status'] = res.list[key]['status'];
+					goods['distance'] = res.list[key]['distance'];
+					goods['phone'] = res.list[key]['phone'];
+					goods['owner'] = res.list[key]['engineerName'];
+					goods['sum'] = 0;
+					goods['selected'] = false;
+					goodsList.push(goods);
+				}
+				vm.goodsList = goodsList;
+			});
+		}
+		var vm = new Vue({
+			el: '#refreshContainer',
+			data: {
+				pageType: 'search',
+				title: '库存全局查询',
+				sum: 0,
+				goodsList: [],
+				orderType: 1
+			},
+		})
+
+		mui.init({
+			pullRefresh: {
+				container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down: {
+					height: 50, //可选,默认50.触发下拉刷新拖动距离,
+					auto: true, //可选,默认false.自动下拉刷新一次
+					contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+					callback: function() {
+						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				}
+			}
+		})
+		window.addEventListener("change_type", function(e) {
+			console.log(JSON.stringify(e.detail.type));
+			vm.orderType = e.detail.type;
+		});
+	</script>
+
+</html>

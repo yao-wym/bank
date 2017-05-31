@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>巡检</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body id="app">
+		<header class="mui-bar mui-bar-nav" style="background-color: white;color: #CCCCCC;">
+			<div id="orderTab" class="mui-segmented-control mui-segmented-control-inverted">
+				<a v-tap="checkType=1" class="mui-control-item mui-active">未完成</a>
+				<a v-tap="checkType=2" class="mui-control-item">已完成</a>
+			</div>
+		</header>
+	</body>
+	<script src="js/mui.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/vue-tap.js"></script>
+	<script src="js/common.js"></script>
+	<script>
+		/*----------------  	Part 1   	变量声明  		----------------TODO */
+
+		/*----------------  	Part 2 		miu.init  		----------------TODO */
+		mui.init();
+		/*----------------  	Part 3 		mui.plusReady	----------------TODO */
+		mui.plusReady(function() {
+			sub = plus.webview.create("index_check_list.html", "index_check_list.html", {
+				top: '50px',
+				bottom: "0px"
+			});
+			plus.webview.currentWebview().append(sub)
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					title: '我的订单',
+					checkType: 1
+				},
+				watch: {
+					checkType: function(newValue, oldValue) {
+						console.log('v-tap' + newValue);
+						mui.fire(sub, 'change_type', {
+							'type': newValue
+						});
+					}
+				}
+			})
+		});
+		/*----------------  	Part 4 		页面设置			----------------TODO */
+
+		/*----------------  	Part 5 		事件处理			----------------TODO */
+		window.addEventListener('dragright', function(e) {
+			e.detail.gesture.preventDefault();
+		});
+		/*----------------  	Part 6 		平台相关			----------------TODO */
+		//在android4.4.2中的swipe事件，需要preventDefault一下，否则触发不正常
+	</script>
+
+</html>

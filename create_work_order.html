@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{{ title }}</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/vue-tap.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/common.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-table-view-cell.mui-active {
+				background-color: inherit;
+			}
+		</style>
+	</head>
+
+	<body id="app" style="background-color: #F2F4F9;">
+		<!--Begin 顶部导航 + 搜索Bar-->
+
+		<ul class="mui-table-view" style="font-size: 13px;background-color: #F2F4F9;">
+			<li class="mui-table-view-cell">派单人员代码: {{user.code}}</li>
+			<li class="mui-table-view-cell">派单人: {{user.name}}</li>
+			<li class="mui-table-view-cell">拍单人电话: {{user.phone}}</li>
+			<li class="mui-table-view-cell">
+				<div style="float: left;width: 20%;">机具编号:</div>
+				<input v-model="atmId" style="position: relative;top:0px;font-size: 14px;float: left;width: 50%;border: none;" placeholder="请输入编号" />
+				<div style="float: right;width: 30%;">
+					<button type="button" class="mui-btn mui-btn-outlined" style="font-size: 12px;color:white;padding: 4px 10px;background-color: #5A81FF;">
+		  				<a link="pages/barcode_scan.html" style="color: white;">扫码生成</a></button>
+				</div>
+			</li>
+			<li link="pages/map_container.html" class="mui-table-view-cell">
+				<div style="float: left;width: 20%;">装机位置：</div>
+				<div style="float: right;width: 80%;">{{address}}</div>
+			</li>
+			<li style="margin-top: 10px;" class="mui-table-view-cell state-btn-container">
+				<div>机具状态：</div>
+				<div style="padding: 5px 5px 0px 5px;">
+					<button type="button" class="mui-btn mui-btn-primary">正常</button>
+				</div>
+			</li>
+			<li class="mui-table-view-cell state-btn-container">
+				<div>故障类型：</div>
+				<div style="padding: 5px 5px 0px 5px;">
+					<button type="button" class="mui-btn mui-btn-primary {{selected}}">零件故障</button>
+				</div>
+
+			</li>
+			<li style="margin-top: 10px;" class="mui-table-view-cell">
+				<div style="display: inline-block;font-size: 14px">预约日期：</div>
+				<input type="datetime" value="2017-05-02 22:22:22" style="margin: 0;border: none;padding: 0;display: inline-block;width: 50%;line-height: 23px;height: 23px;">
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				<div style="display: inline-block;font-size: 14px">备注描述：</div>
+
+				<textarea style=""></textarea>
+				<div class="img-container">
+					<div v-for="photo in photoList" style="margin-left: 10px;float: left;position: relative;width: 70px;height: 70px;">
+						<img src="photo" style=";width: 70px;height: 70px;" alt="" />
+						<div style="position: absolute;top:-6px;right:-6px;color: white;text-align: center;line-height: 15px;width:15px;height: 15px;border-radius: 50%;background-color: #FF666A;" class="icon-close">
+							x
+						</div>
+					</div>
+					<div v-tap="getPhoto()" style="margin-left: 10px;float: left;line-height: 70px;text-align: center;font-size: 80px;border: 1px solid #AAAAAA;position: relative;width: 70px;height: 70px;border-radius: 10px;">
+						+
+					</div>
+				</div>
+			</li>
+		</ul>
+
+		<button v-tap="createTask()" style="width: 100%;border-radius: 0;" type="button" class="mui-btn mui-btn-primary">
+			预约
+		</button>
+
+	</body>
+	<script src="js/common.js"></script>
+	<script src="js/api.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				address: "123",
+				title: '新建工单',
+				atmId: "",
+				unTypes: "",
+				status: "",
+				beginDate: "",
+				note: "",
+				user: {},
+				photoList: [],
+				selected: 'mui-btn-outlined'
+
+			},
+			methods: {
+				createTask: function() {
+					var body = {
+						"atmId": this.atmId,
+						"beginDate": this.beginDate,
+						"status": this.status,
+						"unTypes": [
+							this.unTypes,
+						]
+					}
+					bank.post(TASK_CREATE_API, {
+						body: JSON.stringify(body)
+					}, function(res) {
+
+					})
+				},
+				getPhoto:function() {
+					captureImage(function(path) {
+						createUpload(IMG_UPLOAD_API,{file:path},function(url){
+							vm.photoList.push(url);
+						})
+					})
+				}
+			}
+		})
+
+		function scaned(type, result, file) {
+			vm.code = result;
+		}
+
+		function initAddress(addresses) {
+			vm.address = addresses;
+		}
+
+		mui.plusReady(function() {
+			vm.user = bank.getItem("user");
+			console.log("bank user=" + vm.user.name);
+			logLocation(function(location) {
+				console.log(JSON.stringify(location));
+				initAddress(location.addresses);
+			});
+		})
+		window.addEventListener("init_user", function() {
+			vm.user = bank.getItem("user");
+		})
+	</script>
+
+</html>

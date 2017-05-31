@@ -7,30 +7,154 @@
 		<title>我的</title>
 		<script src="js/mui.min.js"></script>
 		<script src="js/vue.js"></script>
+		<script src="js/vue-tap.js"></script>
+		<script src="js/api.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/common.css" rel="stylesheet" />
 		<style type="text/css">
+			ul li {
+				background-color: white;
+				font-size: 15px;
+			}
+			
+			.mui-table-view-cell {
+				padding-top: 7px;
+				padding-bottom: 7px;
+			}
+			
+			.mui-table-view-cell a img {
+				border-radius: 0;
+				width: 15px;
+				height: 15px;
+			}
+			
+			.mui-table-view-cell a span {
+				margin-top: 5px;
+				position: relative;
+				top: -2px;
+				color: #6D6D72;
+			}
+			
+			.mui-table-view:before {
+				background-color: #DDDDDD;
+			}
+			
+			.mui-table-view:after {
+				background-color: inherit;
+			}
+			
+			.mui-table-view-cell:after {
+				background-color: #DDDDDD;
+			}
+			
+			.mui-table-view .mui-table-view-cell {
+				padding: 12px;
+			}
 		</style>
 	</head>
-	<body>
-		<div class="mui-content">
-			<ul class="mui-table-view">
 
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" link="pages/my_info.html">我的信息</a>
+	<body style="background-color: #f5f8ff;" id="app">
+		<div class="mui-content" style="background-color: #f5f8ff;padding: 0 0px">
+			<div style="background-color: white;position: relative;">
+				<div style="height: 150px;background-color: #567ffb;text-align: center;">
+					<img v-bind:src="icon" border=0 style="margin-top: 40px;border-radius: 50%;background-color: white;" />
+					<p style="color: white;">{{username}}</p>
+				</div>
+				<div class="mui-btn bg" v-bind:style="{backgroundColor:workStatus=='上班'?'#FFC03C':'#FF676B'}" style="color: white;border: none;border-radius: 10px;width: 90%;margin:5px 0 5px 5%;">
+					<div v-tap="changeWorkStatus" style="margin-right: 10px;">
+						<img src="img/shangban.png" width="18px" style="margin-right: 5px;position: relative;top:3px" />
+						<span>{{workStatus}}</span>
+					</div>
+				</div>
+				<img src="img/bolang.png" alt="" style="position: absolute;bottom:44px;left:0px;width: 100%;" />
+			</div>
+			<ul class="mui-table-view index-center-menu" style="margin-top: 10px;background-color: inherit;">
+				<li style="margin-top: 5x;" class="mui-table-view-cell">
+					<a style="overflow: hidden;" class="mui-navigate-right" link="pages/my_info.html">
+						<img src="img/user-info.png" />
+						<span>我的信息</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" style="margin-top: 10px;">
+					<a style="overflow: hidden;" class="mui-navigate-right" link="pages/components_search.html?type=my_components">
+						<img src="img/kufang.png" />
+						<span>我的库房</span>
+					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" link="pages/login.html">切换账号</a>
+					<a style="overflow: hidden;" class="mui-navigate-right" link="pages/components_search.html?type=my_out_components">
+						<img class="" src="img/daichuku.png" />
+						<span>我的待出库</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a style="overflow: hidden;" class="mui-navigate-right" link="pages/components_search.html?type=my_in_components">
+						<img class="" src="img/dairuku.png" />
+						<span>我的待入库</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" style="margin-top: 10px;">
+					<a style="overflow: hidden;" class="mui-navigate-right" link="pages/components_search.html?type=all_components">
+						<img class="" src="img/kufangchaxun.png" />
+						<span>库存全局查询</span>
+					</a>
+				</li>
+				<li style="margin-top: 10px;" class="mui-table-view-cell">
+					<a style="overflow: hidden;" class="mui-navigate-right" link="pages/my_comments.html?uid={{uid}}">
+						<img class="" src="img/edit.png" />
+						<span>我的评价</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" style="margin: 10px 10px;">
+					<a style="overflow: hidden;text-align: center" v-tap="loginOut">
+						<span style="color: #C0C0C0;">退出账号</span>
+					</a>
 				</li>
 			</ul>
 		</div>
+		<script src="js/common.js"></script>
 		<script>
-			mui.plusReady(function() {
-				mui.init();
-			});
+			var vm = new Vue({
+				methods:{
+					changeWorkStatus:function(){
+						this.workStatus=this.workStatus=='下班'?'上班':'下班';
+					},
+					loginOut:function(){ 
+						localStorage.setItem('token','');
+						redirect('pages/login.html');
+					}
+				},
+				el: '#app',
+				data: {
+					username: '',
+					workStatus:'上班',
+					uid:''
+				},
+				watch: {
 
+				}
+			})
+
+			function initUserInfo(user) {
+				bank.setItem("user",user);
+				mui.fire(plus.webview.getWebviewById("create_work_order.html"),"init_user");
+			}
+			window.addEventListener("init_user",function(){
+				bank.get(USER_INFO_API, {
+					"field": 1
+				}, initUserInfo)
+			})
+			mui.plusReady(function() {
+				token = localStorage.getItem('token');
+				if(!token){
+					return;
+				}
+				mui.init();
+				bank.get(USER_INFO_API, {
+					"field": 1
+				}, initUserInfo)
+			});
 		</script>
 	</body>
-	<script src="js/common.js"></script>
-	
+
 </html>
